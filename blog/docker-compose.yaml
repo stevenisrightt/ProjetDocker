@@ -1,0 +1,19 @@
+# Définir cette configuration Compose afin de lancer l'application
+# The Computer Club's Blog en production.
+version: '3'
+
+services:
+  blog:
+    build: .
+    container_name: blogContainer
+    entrypoint: sleep 10 && diesel migration run && ./blog
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    container_name: blogDatabase
+    environment:
+      POSTGRES_USER: steven
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: blog

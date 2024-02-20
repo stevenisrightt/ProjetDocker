@@ -1,0 +1,23 @@
+# Définir cette configuration Compose afin de lancer l'application
+# Make Me Watch en production.
+
+version: '3'
+
+services: 
+  server:
+    build: ./server
+    container_name: serverContainer
+  
+  client:
+    build: ./client
+    container_name: clientContainer
+    ports:
+      - 3000:3000
+
+  ngnx:
+    image: nginx:latest
+    container_name: nginxContainer
+    ports:
+      - 80:80
+    volumes:
+      - ./client/ngnx.conf:/etc/nginx/conf.d/default.conf
